@@ -14,24 +14,14 @@ import AccountPage from '../Account/Account';
 import AdminPage from '../Admin/Admin';
 
 import * as ROUTES from '../../constants/routes';
-import { withFirebase } from '../Firebase';
+import { withAuthentication } from '../Session';
 
-const App = (props) => {
-
-  const [authUser, setAuthUser] = useState(null);
-
-  useEffect(() => {
-    props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? setAuthUser({authUser})
-        : setAuthUser(null)
-    })
-  })
+const App = () => {
 
   return (
       <Router>
         <div>
-          <Navigation authUser={authUser}/>
+          <Navigation />
           <hr/>
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -45,4 +35,4 @@ const App = (props) => {
   );
 }
 
-export default withFirebase(App);
+export default withAuthentication(App);
